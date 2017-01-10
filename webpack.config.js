@@ -10,4 +10,4 @@ module.exports = {
             loader: 'babel-loader?presets[]=es2015&presets[]=react'
         }]
     }
-}
+};
