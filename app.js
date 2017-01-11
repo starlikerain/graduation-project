@@ -8,6 +8,6 @@ import Vue from 'vue'
 let app = new Vue({
     el: '#aipapa',
     data: {
-        message: '基础的传参哦'
+        messageaaaaa: '基础的传参哦'
     }
 });

@@ -61,7 +61,7 @@
 	var app = new _vue2.default({
 	    el: '#aipapa',
 	    data: {
-	        message: '基础的传参哦'
+	        messageaaaaa: '基础的传参哦'
 	    }
 	});
 
