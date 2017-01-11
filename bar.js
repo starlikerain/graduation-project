@@ -1,3 +1,3 @@
 export default function bar() {
-    alert('Hello Webpack!')
+    console.log('Hello Webpack!')
 }
