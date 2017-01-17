@@ -59,9 +59,36 @@
 	(0, _bar2.default)();
 
 	var app = new _vue2.default({
-	    el: '#aipapa',
+	    el: '#app',
 	    data: {
-	        messageaaaaa: '基础的传参哦'
+	        newTodo: '',
+	        todoList: []
+	    },
+	    methods: {
+	        addTodo: function addTodo() {
+	            this.todoList.push({
+	                title: this.newTodo,
+	                createAt: new Date(),
+	                done: false
+	            });
+	            this.newTodo = '';
+	        },
+	        removeTodo: function removeTodo(todo) {
+	            var index = this.todoList.indexOf(todo);
+	            this.todoList.splice(index, 1);
+	        }
+	    },
+	    created: function created() {
+	        var _this = this;
+
+	        window.onbeforeunload = function () {
+	            var dataString = JSON.stringify(_this.todoList);
+	            window.localStorage.setItem('myTodos', dataString);
+	        };
+
+	        var oldDataString = window.localStorage.getItem('myTodos');
+	        var oldData = JSON.parse(oldDataString);
+	        this.todoList = oldData || [];
 	    }
 	});
 
