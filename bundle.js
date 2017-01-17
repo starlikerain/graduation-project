@@ -66,9 +66,11 @@
 	    },
 	    methods: {
 	        addTodo: function addTodo() {
+	            var now_date = new Date();
+
 	            this.todoList.push({
 	                title: this.newTodo,
-	                createAt: new Date(),
+	                createAt: this.getTime(now_date),
 	                done: false
 	            });
 	            this.newTodo = '';
@@ -76,15 +78,41 @@
 	        removeTodo: function removeTodo(todo) {
 	            var index = this.todoList.indexOf(todo);
 	            this.todoList.splice(index, 1);
+	        },
+	        getTime: function getTime(t) {
+	            function setT(t) {
+	                return t < 10 ? '0' + t : t;
+	            }
+	            t = t.length == 10 ? t + '000' : t;
+	            var time = new Date(Number(t));
+	            var year = time.getFullYear(),
+	                month = time.getMonth() + 1,
+	                date = time.getDate(),
+	                Hour = time.getHours(),
+	                Second = time.getSeconds(),
+	                Minu = time.getMinutes();
+	            return year + '-' + setT(month) + '-' + setT(date) + ' ' + setT(Hour) + ':' + setT(Minu) + ':' + setT(Second);
 	        }
 	    },
 	    created: function created() {
 	        var _this = this;
 
 	        window.onbeforeunload = function () {
+	            // input 框
+	            var this_newTodo = JSON.stringify(_this.newTodo);
+	            window.localStorage.setItem('newTodo', this_newTodo);
+	            // todoList 列表
 	            var dataString = JSON.stringify(_this.todoList);
 	            window.localStorage.setItem('myTodos', dataString);
 	        };
+
+	        if (window.localStorage.getItem('newTodo') != '') {
+	            var newTodo_str = window.localStorage.getItem('newTodo');
+	            var newTodo_parse = JSON.parse(newTodo_str);
+	            this.newTodo = newTodo_parse || '';
+
+	            window.localStorage.setItem('newTodo', '');
+	        }
 
 	        var oldDataString = window.localStorage.getItem('myTodos');
 	        var oldData = JSON.parse(oldDataString);

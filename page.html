@@ -9,6 +9,12 @@
         [v-cloak] {
             display: none;
         }
+        p{
+            color: grey;
+        }
+        .time{
+            color: grey;
+        }
     </style>
 </head>
 
@@ -17,15 +23,20 @@
 <div id="app">
     <div class="newTask">
         <input type="text" v-model="newTodo" @keypress.enter="addTodo">
+        <button @click="addTodo">submit</button>
+        <p>Press enter to submit</p>
     </div>
+
     <ol class="todos">
         <li v-for="todo in todoList" v-cloak>
-            <input type="checkbox" v-model="todo.done">{{todo.title}}
+            <input type="checkbox" v-model="todo.done">
+            <span v-if="todo.done" style="color: green;">已完成</span>
+            <span v-else style="color: pink;">未完成</span>
 
-            <span v-if="todo.done">已完成</span>
-            <span v-else>未完成</span>
+            {{todo.title}}
+            <span class="time">{{todo.createAt}}</span>
 
-            <button @click="removeTodo(todo)">X</button>
+            <button @click="removeTodo(todo)">delete</button>
         </li>
     </ol>
 </div>
