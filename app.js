@@ -13,6 +13,10 @@ let app = new Vue({
     },
     methods: {
         addTodo: function () {
+            if(this.newTodo == ''){
+                return false;
+            }
+
             let now_date = new Date();
 
             this.todoList.push({

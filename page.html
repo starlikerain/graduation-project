@@ -9,34 +9,96 @@
         [v-cloak] {
             display: none;
         }
-        p{
+
+        p {
             color: grey;
         }
-        .time{
+
+        .container {
+            font-size: 1.6rem;
+            width: 80rem;
+            margin: 10rem auto;
+        }
+
+        .newTask input {
+            font-size: 1.8rem;
+            display: inline-block;
+            width: 70rem;
+            height: 3rem;
+        }
+
+        .newTask span {
+            vertical-align: text-top;
+            color: white;
+            background: rgba(239, 98, 73, 0.7);
+            border: none;
+            padding: 20px 36px !important;
+            border-radius: 30px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            font-family: "Open Sans", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            transition: 0.5s;
+        }
+
+        .newTask span:hover {
+            cursor: pointer;
+        }
+
+        .todos>li{
+            vertical-align: bottom;
+            margin-left: -1.6rem;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .checkbox{
+            display: inline-block;
+        }
+
+        .title{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 30rem;
+            vertical-align: bottom;
+        }
+
+
+        .createAt {
             color: grey;
+            float: right;
+        }
+        .delete{
+            float: right;
         }
     </style>
 </head>
 
 <body>
 
-<div id="app">
+<div id="app" class="container">
     <div class="newTask">
         <input type="text" v-model="newTodo" @keypress.enter="addTodo">
-        <button @click="addTodo">submit</button>
+        <span @click="addTodo">submit</span>
         <p>Press enter to submit</p>
     </div>
 
     <ol class="todos">
         <li v-for="todo in todoList" v-cloak>
-            <input type="checkbox" v-model="todo.done">
-            <span v-if="todo.done" style="color: green;">已完成</span>
+            <input type="checkbox" v-model="todo.done" class="checkbox">
+
+
+            <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
             <span v-else style="color: pink;">未完成</span>
 
-            {{todo.title}}
-            <span class="time">{{todo.createAt}}</span>
+            <span class="title">{{todo.title}}</span>
 
-            <button @click="removeTodo(todo)">delete</button>
+            <button @click="removeTodo(todo)" class="delete">delete</button>
+            <span class="createAt">创建时间:{{todo.createAt}}</span>
+
+
         </li>
     </ol>
 </div>

@@ -66,6 +66,10 @@
 	    },
 	    methods: {
 	        addTodo: function addTodo() {
+	            if (this.newTodo == '') {
+	                return false;
+	            }
+
 	            var now_date = new Date();
 
 	            this.todoList.push({
