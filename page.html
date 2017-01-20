@@ -9,24 +9,24 @@
         [v-cloak] {
             display: none;
         }
-
+        
         p {
             color: grey;
         }
-
+        
         .container {
             font-size: 1.6rem;
             width: 80rem;
             margin: 10rem auto;
         }
-
+        
         .newTask input {
             font-size: 1.8rem;
             display: inline-block;
             width: 70rem;
             height: 3rem;
         }
-
+        
         .newTask span {
             vertical-align: text-top;
             color: white;
@@ -41,43 +41,42 @@
             font-weight: 400;
             transition: 0.5s;
         }
-
+        
         .newTask span:hover {
             cursor: pointer;
         }
-
-        .todos>li{
+        
+        .todos>li {
             vertical-align: bottom;
             margin-left: -1.6rem;
             position: relative;
             margin-top: 1rem;
         }
-
-        .checkbox{
+        
+        .checkbox {
             display: inline-block;
         }
-
-        .title{
+        
+        .title {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 30rem;
             vertical-align: bottom;
         }
-
-
+        
         .createAt {
             color: grey;
             float: right;
         }
-        .delete{
+        
+        .delete {
             float: right;
             color: white;
             background: rgba(0, 0, 0, 0.4);
             border: none;
-
             border-radius: 30px;
-            margin-top:6px;
+            margin-top: 6px;
             margin-right: 4px;
             margin-bottom: 4px;
             margin-left: 3px;
@@ -90,32 +89,67 @@
 
 <body>
 
-<div id="app" class="container">
-    <div class="newTask">
-        <input type="text" v-model="newTodo" @keypress.enter="addTodo">
-        <span @click="addTodo">submit</span>
-        <p>Press enter to submit</p>
+    <div id="app" class="container">
+
+
+        <section id="signInAndSignUp">
+            <div>
+                <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
+                <label><input type="radio" name="type" v-model="actionType" value="login">登入</label>
+            </div>
+            <div class="signUp" v-show='bool'>
+                <form>
+                    <div class="formRow">
+                        用户名<input type="text">
+                    </div>
+                    <div class="formRow">
+                        密码<input type="password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="注册">
+                    </div>
+                </form>
+            </div>
+            <div class="login" v-show='!bool'>
+                <form>
+                    <div class="formRow">
+                        用户名<input type="text">
+                    </div>
+                    <div class="formRow">
+                        密码<input type="password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="登入">
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <section id="todo">
+            <div class="newTask">
+                <input type="text" v-model="newTodo" @keypress.enter="addTodo">
+                <span @click="addTodo">submit</span>
+                <p>Press enter to submit</p>
+            </div>
+            <ol class="todos">
+                <li v-for="todo in todoList" v-cloak>
+                    <input type="checkbox" v-model="todo.done" class="checkbox">
+
+                    <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
+                    <span v-else style="color: pink;">未完成</span>
+
+                    <span class="title">{{todo.title}}</span>
+
+                    <button @click="removeTodo(todo)" class="delete">delete</button>
+                    <span class="createAt">创建时间:{{todo.createAt}}</span>
+                </li>
+            </ol>
+        </section>
+
     </div>
 
-    <ol class="todos">
-        <li v-for="todo in todoList" v-cloak>
-            <input type="checkbox" v-model="todo.done" class="checkbox">
-
-
-            <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
-            <span v-else style="color: pink;">未完成</span>
-
-            <span class="title">{{todo.title}}</span>
-
-            <button @click="removeTodo(todo)" class="delete">delete</button>
-            <span class="createAt">创建时间:{{todo.createAt}}</span>
-
-
-        </li>
-    </ol>
-</div>
-
-<script src="bundle.js"></script>
+    <script src="bundle.js"></script>
 </body>
 
 </html>

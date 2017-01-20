@@ -62,7 +62,9 @@
 	    el: '#app',
 	    data: {
 	        newTodo: '',
-	        todoList: []
+	        todoList: [],
+	        actionType: 'signUp',
+	        bool: true
 	    },
 	    methods: {
 	        addTodo: function addTodo() {
@@ -96,6 +98,18 @@
 	                Second = time.getSeconds(),
 	                Minu = time.getMinutes();
 	            return year + '-' + setT(month) + '-' + setT(date) + ' ' + setT(Hour) + ':' + setT(Minu) + ':' + setT(Second);
+	        }
+	    },
+	    computed: {
+	        toggle_login_register: function toggle_login_register() {
+	            switch (this.actionType) {
+	                case 'signUp':
+	                    this.bool = true;
+	                    break;
+	                case 'login':
+	                    this.bool = false;
+	                    break;
+	            }
 	        }
 	    },
 	    created: function created() {
