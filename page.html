@@ -92,31 +92,31 @@
     <div id="app" class="container">
 
 
-        <section id="signInAndSignUp">
+        <section id="signInAndSignUp" v-if="!currentUser">
             <div>
                 <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
                 <label><input type="radio" name="type" v-model="actionType" value="login">登入</label>
             </div>
-            <div class="signUp" v-show='bool'>
-                <form>
+            <div class="signUp" v-if="actionType=='signUp'">
+                <form @submit.prevent=signUp>
                     <div class="formRow">
-                        用户名<input type="text">
+                        用户名<input type="text" v-model="formData.username">
                     </div>
                     <div class="formRow">
-                        密码<input type="password">
+                        密码<input type="password" v-model="formData.password">
                     </div>
                     <div class="formActions">
                         <input type="submit" value="注册">
                     </div>
                 </form>
             </div>
-            <div class="login" v-show='!bool'>
-                <form>
+            <div class="login" v-if="actionType=='login'">
+                <form @submit.prevent=login>
                     <div class="formRow">
-                        用户名<input type="text">
+                        用户名<input type="text" v-model="formData.username">
                     </div>
                     <div class="formRow">
-                        密码<input type="password">
+                        密码<input type="password" v-model="formData.password">
                     </div>
                     <div class="formActions">
                         <input type="submit" value="登入">
@@ -126,7 +126,11 @@
         </section>
 
 
-        <section id="todo">
+        <section id="todo" v-if="currentUser">
+            <p>
+                <p>你好，{{this.formData.username}}</p>
+                <button @click="logout">登出</button>
+            </p>
             <div class="newTask">
                 <input type="text" v-model="newTodo" @keypress.enter="addTodo">
                 <span @click="addTodo">submit</span>

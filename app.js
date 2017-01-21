@@ -1,9 +1,22 @@
-import bar from './bar';
-
-
-bar();
-
 import Vue from 'vue'
+import AV from 'leancloud-storage'
+
+var APP_ID = 'x1IPVDJJYqqUrCsHH0pM4wgD-gzGzoHsz';
+var APP_KEY = 'eel2mVyI3WisthawOPPGeFvc';
+AV.init({
+    appId: APP_ID,
+    appKey: APP_KEY
+});
+
+// check Leanote init success or not
+// var TestObject = AV.Object.extend('TestObject');
+// var testObject = new TestObject();
+// testObject.save({
+//     words: 'Hello World!'
+// }).then(function(object) {
+//     alert('LeanCloud Rocks!');
+// })
+
 
 let app = new Vue({
     el: '#app',
@@ -11,7 +24,11 @@ let app = new Vue({
         newTodo: '',
         todoList: [],
         actionType: 'signUp',
-        bool: true
+        currentUser: null,
+        formData: {
+            username: '',
+            password: ''
+        }
     },
     methods: {
         addTodo: function() {
@@ -45,18 +62,40 @@ let app = new Vue({
                 Second = time.getSeconds(),
                 Minu = time.getMinutes();
             return year + '-' + setT(month) + '-' + setT(date) + ' ' + setT(Hour) + ':' + setT(Minu) + ':' + setT(Second);
-        }
-    },
-    computed: {
-        toggle_login_register: function() {
-            switch (this.actionType) {
-                case 'signUp':
-                    this.bool = true
-                    break;
-                case 'login':
-                    this.bool = false
-                    break;
+        },
+        getCurrentUser: function() {
+            // LeanCloud 文档说 AV.User.current() 可以获取当前登录的用户
+            let current = AV.User.current()
+            if (current) {
+                let { id, createdAt, attributes: { username } } = AV.User.current()
+                return { id, username, createdAt }
+            } else {
+                return null
             }
+        },
+        signUp: function() {
+            let user = new AV.User()
+            user.setUsername(this.formData.username);
+            user.setPassword(this.formData.password);
+            user.signUp().then((loginedUser) => {
+                this.currentUser = this.getCurrentUser()
+                console.log('signUp success')
+            }, (error) => {
+                alert('注册失败')
+            });
+        },
+        login: function() {
+            AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser) => {
+                this.currentUser = this.getCurrentUser()
+            }, function(error) {
+                alert('登录失败')
+            });
+
+        },
+        logout: function() {
+            AV.User.logOut()
+            this.currentUser = null
+            window.location.reload()
         }
     },
     created: function() {
@@ -81,5 +120,6 @@ let app = new Vue({
         let oldData = JSON.parse(oldDataString);
         this.todoList = oldData || [];
 
+        this.currentUser = this.getCurrentUser()
     }
 });
