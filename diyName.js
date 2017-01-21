@@ -96,7 +96,8 @@
 	            this.todoList.push({
 	                title: this.newTodo,
 	                createAt: this.getTime(now_date),
-	                done: false
+	                done: false,
+	                identyfy: this.currentUser.username
 	            });
 	            this.newTodo = '';
 	        },

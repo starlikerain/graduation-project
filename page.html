@@ -90,8 +90,6 @@
 <body>
 
     <div id="app" class="container">
-
-
         <section id="signInAndSignUp" v-if="!currentUser">
             <div>
                 <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
@@ -125,7 +123,6 @@
             </div>
         </section>
 
-
         <section id="todo" v-if="currentUser">
             <p>
                 <p>你好，{{this.formData.username}}</p>
@@ -150,10 +147,9 @@
                 </li>
             </ol>
         </section>
-
     </div>
 
-    <script src="bundle.js"></script>
+    <script src="diyName.js"></script>
 </body>
 
 </html>
