@@ -85,6 +85,15 @@
 	      password: ''
 	    }
 	  },
+	  watch: {
+	    todoList: {
+	      handler: function handler() {
+	        this.saveOrUpdateTodos();
+	      },
+	      // 监听对象内部值得变化，数组不需要此参数
+	      deep: true
+	    }
+	  },
 	  methods: {
 	    addTodo: function addTodo() {
 	      if (this.newTodo == '') {
