@@ -5,28 +5,68 @@
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/iconfont.css">
     <style>
         [v-cloak] {
             display: none;
         }
-        
+
         p {
             color: grey;
         }
-        
+
+        section.logInPage {
+            text-align: center;
+        }
+
+        .EY-icon i{
+            background-color: #eee;
+            padding: 5px 5px 5px 7px;
+            border-radius: 5px 0 0 5px ;
+        }
+
+        .loginIpt {
+            height: 20px;
+        }
+
+
+        section.logInPage > p {
+            margin-bottom: 5px;
+        }
+
+        div.registerAndlogin label {
+            font-size: 16px;
+        }
+
+        input.EY-loginBtn {
+            width: 160px;
+            color: #fff;
+            border-radius: 3px;
+            background-color: #108ee9;
+            border-color: #108ee9;
+        }
+
+        .EY-btnLogOut {
+            width: 100px;
+            color: #fff;
+            border-radius: 3px;
+            background-color: pink;
+            border-color: pink;
+        }
+
         .container {
             font-size: 1.6rem;
             width: 80rem;
             margin: 10rem auto;
         }
-        
+
         .newTask input {
             font-size: 1.8rem;
             display: inline-block;
             width: 70rem;
             height: 3rem;
         }
-        
+
         .newTask span {
             vertical-align: text-top;
             color: white;
@@ -41,22 +81,22 @@
             font-weight: 400;
             transition: 0.5s;
         }
-        
+
         .newTask span:hover {
             cursor: pointer;
         }
-        
-        .todos>li {
+
+        .todos > li {
             vertical-align: bottom;
             margin-left: -1.6rem;
             position: relative;
             margin-top: 1rem;
         }
-        
+
         .checkbox {
             display: inline-block;
         }
-        
+
         .title {
             overflow: hidden;
             white-space: nowrap;
@@ -64,12 +104,12 @@
             width: 30rem;
             vertical-align: bottom;
         }
-        
+
         .createAt {
             color: grey;
             float: right;
         }
-        
+
         .delete {
             float: right;
             color: white;
@@ -89,67 +129,69 @@
 
 <body>
 
-    <div id="app" class="container">
-        <section id="signInAndSignUp" v-if="!currentUser">
-            <div>
-                <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
-                <label><input type="radio" name="type" v-model="actionType" value="login">登入</label>
-            </div>
-            <div class="signUp" v-if="actionType=='signUp'">
-                <form @submit.prevent=signUp>
-                    <div class="formRow">
-                        用户名<input type="text" v-model="formData.username">
-                    </div>
-                    <div class="formRow">
-                        密码<input type="password" v-model="formData.password">
-                    </div>
-                    <div class="formActions">
-                        <input type="submit" value="注册">
-                    </div>
-                </form>
-            </div>
-            <div class="login" v-if="actionType=='login'">
-                <form @submit.prevent=login>
-                    <div class="formRow">
-                        用户名<input type="text" v-model="formData.username">
-                    </div>
-                    <div class="formRow">
-                        密码<input type="password" v-model="formData.password">
-                    </div>
-                    <div class="formActions">
-                        <input type="submit" value="登入">
-                    </div>
-                </form>
-            </div>
-        </section>
+<div id="app" class="container">
+    <section class="logInPage" id="signInAndSignUp" v-if="!currentUser">
+        <p>Vue todoList</p>
+        <div class="registerAndlogin">
+            <label><input type="radio" name="type" v-model="actionType" value="signUp" class="greenStyle">&nbsp;&nbsp;注册</label>
+            <label><input type="radio" name="type" v-model="actionType" value="login" class="greenStyle">&nbsp;&nbsp;登入</label>
+        </div>
+        <div class="signUp" v-if="actionType=='signUp'">
+            <form @submit.prevent=signUp>
+                <div class="formRow EY-icon">
+                    <i class="iconfont icon-account"></i><input class="loginIpt" type="text" v-model="formData.username">
+                </div>
+                <div class="formRow EY-icon">
+                    <i class="iconfont icon-Password"></i><input class="loginIpt" type="password" v-model="formData.password">
+                </div>
+                <div class="formActions">
+                    <input class="EY-loginBtn" type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+        <div class="login" v-if="actionType=='login'">
+            <form @submit.prevent=login>
+                <div class="formRow EY-icon">
+                    <i class="iconfont icon-account"></i><input class="loginIpt" type="text" v-model="formData.username">
+                </div>
+                <div class="formRow EY-icon">
+                    <i class="iconfont icon-Password"></i><input class="loginIpt" type="password" v-model="formData.password">
+                </div>
+                <div class="formActions">
+                    <input class="EY-loginBtn" type="submit" value="登入">
+                </div>
+            </form>
+        </div>
+    </section>
 
-        <section id="todo" v-if="currentUser" v-cloak>
-            <p>
-                <p>你好，{{this.currentUser.username}}</p>
-                <button @click="logout">登出</button>
-            </p>
-            <div class="newTask">
-                <input type="text" v-model="newTodo" autofocus @keypress.enter="addTodo">
-                <span @click="addTodo">submit</span>
-                <p>Press enter to submit</p>
-            </div>
-            <ol class="todos">
-                <li v-for="todo in todoList">
-                    <input type="checkbox" v-model="todo.done" class="checkbox">
 
-                    <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
-                    <span v-else style="color: pink;">未完成</span>
+    <section id="todo" v-if="currentUser" v-cloak>
+        <p>
+        <p>你好，{{this.currentUser.username}}</p>
+        <button class="EY-btnLogOut" @click="logout">登出</button>
+        </p>
+        <div class="newTask">
+            <input type="text" v-model="newTodo" autofocus @keypress.enter="addTodo">
+            <span @click="addTodo">submit</span>
+            <p>Press enter to submit</p>
+        </div>
+        <ol class="todos">
+            <li v-for="todo in todoList">
+                <input type="checkbox" v-model="todo.done" class="checkbox">
 
-                    <span class="title">{{todo.title}}</span>
+                <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
+                <span v-else style="color: pink;">未完成</span>
 
-                    <button @click="removeTodo(todo)" class="delete">delete</button>
-                    <span class="createAt">创建时间:{{todo.createAt}}</span>
-                </li>
-            </ol>
-        </section>
-    </div>
+                <span class="title">{{todo.title}}</span>
 
-    <script src="diyName.js"></script>
+                <button @click="removeTodo(todo)" class="delete">delete</button>
+                <span class="createAt">创建时间:{{todo.createAt}}</span>
+            </li>
+        </ol>
+    </section>
+</div>
+
+<script src="diyName.js"></script>
 </body>
 
 </html>
