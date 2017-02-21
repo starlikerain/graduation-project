@@ -124,6 +124,23 @@
             font-size: 16px;
             font-weight: 400;
         }
+
+        .delete2 {
+            width: 110px;
+            text-align: center;
+            float: right;
+            color: white;
+            background: rgba(0, 0, 0, 0.4);
+            border: none;
+            border-radius: 30px;
+            margin-top: 6px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            margin-left: 3px;
+            font-family: "Open Sans", Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+        }
     </style>
 </head>
 
@@ -177,17 +194,20 @@
         </div>
         <ol class="todos">
             <li v-for="todo in todoList">
+                <label>
                 <input type="checkbox" v-model="todo.done" class="checkbox">
 
                 <span v-if="todo.done" style="color: green;" class="fini">已完成</span>
                 <span v-else style="color: pink;">未完成</span>
-
+                </label>
                 <span class="title">{{todo.title}}</span>
 
                 <button @click="removeTodo(todo)" class="delete">delete</button>
                 <span class="createAt">创建时间:{{todo.createAt}}</span>
             </li>
         </ol>
+        <button class="delete2" @click="markAllAsFinished">全部已完成</button>
+        <button class="delete2" @click="removeTodoFinished()">删除已完成</button>
     </section>
 </div>
 

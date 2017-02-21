@@ -18,7 +18,7 @@ AV.init({
 // })
 
 
-let app = new Vue({
+var vm = new Vue({
     el: '#app',
     data: {
         newTodo: '',
@@ -59,6 +59,32 @@ let app = new Vue({
         removeTodo: function (todo) {
             let index = this.todoList.indexOf(todo);
             this.todoList.splice(index, 1);
+            this.saveOrUpdateTodos();
+        },
+        markAllAsFinished: function () {
+            let getAllFinished = this.todoList, // @type Object
+                obj_len = getAllFinished.length;
+
+            for (let i = 0; i < obj_len; i++) {
+                if (!getAllFinished[i].done) {
+                    this.todoList[i].done = true;
+                }
+            }
+
+            this.saveOrUpdateTodos();
+        },
+        removeTodoFinished: function () {
+            let getAllFinished = this.todoList, // @type Object
+                obj_len = getAllFinished.length;
+
+            for (let i = 0; i < obj_len; i++) {
+                if (getAllFinished[i].done) {
+                    this.todoList.splice(i, 1);
+                    i--
+                    --obj_len
+                }
+            }
+
             this.saveOrUpdateTodos();
         },
         getTime: function (t) {

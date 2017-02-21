@@ -73,7 +73,7 @@
 	// })
 
 
-	var app = new _vue2.default({
+	var vm = new _vue2.default({
 	    el: '#app',
 	    data: {
 	        newTodo: '',
@@ -114,6 +114,34 @@
 	        removeTodo: function removeTodo(todo) {
 	            var index = this.todoList.indexOf(todo);
 	            this.todoList.splice(index, 1);
+	            this.saveOrUpdateTodos();
+	        },
+	        markAllAsFinished: function markAllAsFinished() {
+	            var getAllFinished = this.todoList,
+	                // @type Object
+	            obj_len = getAllFinished.length;
+
+	            for (var i = 0; i < obj_len; i++) {
+	                if (!getAllFinished[i].done) {
+	                    this.todoList[i].done = true;
+	                }
+	            }
+
+	            this.saveOrUpdateTodos();
+	        },
+	        removeTodoFinished: function removeTodoFinished() {
+	            var getAllFinished = this.todoList,
+	                // @type Object
+	            obj_len = getAllFinished.length;
+
+	            for (var i = 0; i < obj_len; i++) {
+	                if (getAllFinished[i].done) {
+	                    this.todoList.splice(i, 1);
+	                    i--;
+	                    --obj_len;
+	                }
+	            }
+
 	            this.saveOrUpdateTodos();
 	        },
 	        getTime: function getTime(t) {
