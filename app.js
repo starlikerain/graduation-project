@@ -18,7 +18,7 @@ AV.init({
 // })
 
 
-var vm = new Vue({
+let vm = new Vue({
     el: '#app',
     data: {
         newTodo: '',
