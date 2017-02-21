@@ -130,7 +130,7 @@
 <body>
 
 <div id="app" class="container">
-    <section class="logInPage" id="signInAndSignUp" v-if="!currentUser">
+    <section class="logInPage" id="signInAndSignUp" v-if="!currentUser" v-cloak>
         <p>Vue todoList</p>
         <div class="registerAndlogin">
             <label><input type="radio" name="type" v-model="actionType" value="signUp" class="greenStyle">&nbsp;&nbsp;注册</label>
